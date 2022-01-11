@@ -6,11 +6,21 @@ import "hardhat-deploy";
 import "hardhat-deploy-ethers";
 
 import { HardhatUserConfig } from "hardhat/types";
-import "./tasks/global";
 
 require("dotenv").config();
 
+const chainIds = {
+  goerli: 5,
+  hardhat: 31337,
+  kovan: 42,
+  mainnet: 1,
+  rinkeby: 4,
+  ropsten: 3,
+};
+
+
 const hhconfig: HardhatUserConfig = {
+  defaultNetwork: "hardhat",
   solidity: {
     version: "0.7.5",
     settings: {
@@ -22,18 +32,11 @@ const hhconfig: HardhatUserConfig = {
   },
   networks: {
     hardhat: {
-      mining: {
-        auto: true,
-        interval: 12000,
-      },
       forking: {
-        url: process.env.MAINNET_RPC,
+        url: 'https://eth-mainnet.alchemyapi.io/v2/MFUlslthtwp5QyRBBYKO8-eAYlKfEL_M',
       },
-    },
-    mainnet: {
-      url: process.env.MAINNET_RPC,
-      accounts: [process.env.DEPLOYER_PKEY],
-    },
+      chainId: chainIds.hardhat,
+    }
   },
   namedAccounts: {
     deployer: 0,
