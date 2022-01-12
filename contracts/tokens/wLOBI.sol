@@ -12,9 +12,6 @@ import "../types/ERC20.sol";
 /* 
     Represents the wrapped sLOBI token with the given formula:
         #(wLOBI) = #(sLOBI.index())sLOBI
-    Uses:
-        - Cross chain
-        - On chain governance (Following Compound's Governance Beta - https://compound.finance/docs/governance)
  */
 contract wLOBI is IwLOBI, ERC20 {
 
