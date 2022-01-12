@@ -7,5 +7,4 @@ deployments/localhost
 deploy.json
 .DS_Store
 .github/workflows/CI.yml
-test
 scripts
