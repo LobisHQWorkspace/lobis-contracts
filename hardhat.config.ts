@@ -6,6 +6,7 @@ import "hardhat-deploy";
 import "hardhat-deploy-ethers";
 
 import { HardhatUserConfig } from "hardhat/types";
+import "./tasks/global";
 
 require("dotenv").config();
 
@@ -17,7 +18,6 @@ const chainIds = {
   rinkeby: 4,
   ropsten: 3,
 };
-
 
 const hhconfig: HardhatUserConfig = {
   defaultNetwork: "hardhat",
@@ -33,10 +33,14 @@ const hhconfig: HardhatUserConfig = {
   networks: {
     hardhat: {
       forking: {
-        url: 'https://eth-mainnet.alchemyapi.io/v2/MFUlslthtwp5QyRBBYKO8-eAYlKfEL_M',
+        url: process.env.MAINNET_RPC,
       },
       chainId: chainIds.hardhat,
-    }
+    },
+    mainnet: {
+      url: process.env.MAINNET_RPC,
+      accounts: [process.env.DEPLOYER_PKEY],
+    },
   },
   namedAccounts: {
     deployer: 0,
