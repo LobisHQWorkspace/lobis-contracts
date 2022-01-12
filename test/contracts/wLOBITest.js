@@ -18,7 +18,7 @@ describe("wLOBI", async function () {
 
         /* Deploy wLOBI contract */
         const wLOBIFactory = await ethers.getContractFactory("wLOBI");
-        wLOBI = await wLOBIFactory.deploy(owner.address, sLOBI.address);
+        wLOBI = await wLOBIFactory.deploy(owner.address, owner.address, sLOBI.address);
         await wLOBI.deployed();
     });
 

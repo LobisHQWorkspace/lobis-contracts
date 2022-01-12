@@ -30,21 +30,40 @@ contract wLOBI is IwLOBI, ERC20 {
         _;
     }
 
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner");
+        _;
+    }
+
     /* ========== STATE VARIABLES ========== */
 
     Iindexable public sLobiIndex;
     address public approved; // minter
+    address public owner; // owner
     bool public migrated;
 
     /* ========== CONSTRUCTOR ========== */
 
-    constructor(address _owner, address _sLOBI)
+    constructor(address _owner, address _minter, address _sLOBI)
         ERC20("Governance LOBI", "wLOBI", 18)
     {
         require(_owner != address(0), "Zero address: Owner");
         approved = _owner;
+        require(_minter != address(0), "Zero address: Minter");
+        approved = _minter;
         require(_sLOBI != address(0), "Zero address: sLOBI");
         sLobiIndex = Iindexable(_sLOBI);
+    }
+
+    /* ========== OWNER FUNCTIONS ==========  */
+
+    /**
+        @notice This function assigns a new minting contract, should be used only in case of a migration.
+        @notice Can only be accessed by the owner (treasury / multisign).
+        @param _newMinter address of the new minter
+     */
+    function changeMinter(address _newMinter) external onlyOwner {
+        approved = _newMinter;
     }
 
     /* ========== MUTATIVE FUNCTIONS ========== */
