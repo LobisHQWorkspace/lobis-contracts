@@ -12,7 +12,17 @@ import "./tasks/migrator";
 
 require("dotenv").config();
 
+const chainIds = {
+  goerli: 5,
+  hardhat: 31337,
+  kovan: 42,
+  mainnet: 1,
+  rinkeby: 4,
+  ropsten: 3,
+};
+
 const hhconfig: HardhatUserConfig = {
+  defaultNetwork: "hardhat",
   solidity: {
     version: "0.7.5",
     settings: {
@@ -24,14 +34,11 @@ const hhconfig: HardhatUserConfig = {
   },
   networks: {
     hardhat: {
-      mining: {
-        auto: true,
-        interval: 12000,
-      },
       forking: {
         url: process.env.MAINNET_RPC,
         //blockNumber: 13816308,
       },
+      chainId: chainIds.hardhat,
     },
     mainnet: {
       url: process.env.MAINNET_RPC,
