@@ -1541,3 +1541,17 @@ task("travel", "travel").setAction(async (args, { run, ethers, network }) => {
     `Bond Price after ${hours}h: ${bondPriceAfter.toString() / 1e18} `
   );
 });
+
+task("create-token-bond-helper", "Create the helper for bonds").setAction(
+    async (args, { deployments, getNamedAccounts }) => {
+        const { deployer } = await getNamedAccounts();
+        const bondCRV = await deployments.get("TokenBondDepositoryCRV");
+        const bondFXS = await deployments.get("TokenBondDepositoryFXS");
+        const bondOHMLOBI = await deployments.get("TokenBondDepositoryOHMLOBI");
+        const tokenBondHelper = await deployments.deploy("TokenBondHelper", {
+            args: [[bondCRV.address, bondFXS.address, bondOHMLOBI.address]],
+            from: deployer
+        });
+        console.log("token bond helper deploy", tokenBondHelper.address);
+    }
+);
